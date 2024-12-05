@@ -7,6 +7,8 @@ import shap
 import uvicorn
 from sklearn.model_selection import train_test_split
 import os
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Load the saved models
 logistic_model = joblib.load('./fastapi/logistic_regression_model.pkl')
@@ -41,6 +43,15 @@ explainer = shap.Explainer(logistic_model, X_train.astype(bool))
 
 # FastAPI App Initialization
 app = FastAPI(title="Heart Disease Prediction API with SHAP")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Replace with your frontend's URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 
 class InputData(BaseModel):
