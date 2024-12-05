@@ -47,12 +47,13 @@ app = FastAPI(title="Heart Disease Prediction API with SHAP")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Replace with your frontend's URL
+    # Replace with your frontend's URL
+    allow_origins=["http://localhost:3000",
+                   "https://hd-predicition-vercel.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers
 )
-
 
 class InputData(BaseModel):
     HadAngina: int
